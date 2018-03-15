@@ -1,0 +1,19 @@
+{
+  "name": "2dgraphbuilder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "\u001b[D\u001bhtml)",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kavi4/2DGraphBuilder.git"
+  },
+  "author": "kavi4",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kavi4/2DGraphBuilder/issues"
+  },
+  "homepage": "https://github.com/kavi4/2DGraphBuilder#readme"
+}
