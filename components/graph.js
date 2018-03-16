@@ -6,6 +6,28 @@ class Graph
 		this.edges  = [];
 	}
 
+	delete()
+	{
+		this.points.map(function(point,i){
+			point.delete();
+		});
+		this.edges.map(function(edge,i){
+			edge.delete();
+		});
+	}
+
+	getPoint(id)
+	{
+		var result = false;
+		this.points.forEach(function(point,i){
+			if(point.id == id)
+			{
+				result = point;
+			}
+		});
+		return result;
+	}
+
 	addPoint(point)
 	{
 		this.points.push(point);
@@ -13,17 +35,17 @@ class Graph
 
 	removePoint(id)
 	{
-		var that = this;
-		this.points.map(function(point,i)
+		var self = this;
+		this.points.filter(function(point,i)
 			{
 				if(point.id == id)
 				{
-					that._removeEdges(point);
+					self._removeEdges(point);
 					point.delete();
 					return false;
 				}
 
-				return point;
+				return true;
 			});
 	}
 
@@ -34,7 +56,7 @@ class Graph
 
 	removeEdge(id)
 	{
-		this.edges.map(function(edge,i)
+		this.edges.filter(function(edge,i)
 			{
 				if(edge.id == id)
 				{
@@ -42,13 +64,13 @@ class Graph
 					return false;
 				}
 
-				return edge;
+				return true;
 			});
 	}
 
 	_removeEdges(point)
 	{
-		this.edges.map(function(edge,i){
+		this.edges.filter(function(edge,i){
 			if(edge.firPoint.id == point.id || edge.secPoint.id == point.id)
 			{
 				edge.delete();

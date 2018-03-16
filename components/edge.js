@@ -2,16 +2,17 @@ class Edge
 {
 	constructor(opt)
 	{
-		this.id = opt.id,
-		this.graph = opt.graph,
-		this.config = opt.config.edge,
-		this.target = null,
-		this.container = opt.container,
-		this.firPoint = opt.firPoint,
-		this.secPoint = opt.secPoint,
+		this.id        = opt.id;
+		this.graph     = opt.graph;
+		this.config    = opt.config.edge;
+		this.active    = false;
+		this.target    = null;
+		this.container = opt.container;
+		this.firPoint  = opt.firPoint;
+		this.secPoint  = opt.secPoint;
 		this._render();
 	}
-	
+
 	delete()
 	{
 		this.target.remove();

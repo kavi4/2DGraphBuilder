@@ -13,6 +13,11 @@ var mainConfig = {
 		prefix:"edge-",
 		strokeWidth: 10,
 		color:"#b2bec3",
+	},
+	workPlace:
+	{
+		gPoints:".points",
+		gEdges:".edges",
 	}
 
 	

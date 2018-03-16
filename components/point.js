@@ -1,14 +1,30 @@
 class Point
 {
+	get active(){return this._active}
+	set active(val)
+	{
+		if(val)
+		{
+			this.target.attr({stroke:"white"});
+			this._active = true;
+		}
+		else
+		{
+			this.target.attr({stroke:"null"});
+			this._active = false;
+		}
+	}
+
 	constructor(opt)
 	{
-		this.id        = opt.id,
-		this.graph 	   = opt.graph,
-		this.config    = opt.config.point,
-		this.container = opt.container,
-		this.target    = null,
-		this.x         = opt.x,
-		this.y         = opt.y,
+		this.id        = opt.id;
+		this.graph 	   = opt.graph;
+		this.config    = opt.config.point;
+		this.container = opt.container;
+		this._active    = false;
+		this.target    = null;
+		this.x         = opt.x;
+		this.y         = opt.y;
 		this._render();
 	}
 

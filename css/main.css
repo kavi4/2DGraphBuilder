@@ -23,14 +23,15 @@ body
 svg
 {
 	border: 2px solid #b2bec3;
+	user-select: none;
 }
 
-.clearBtn:hover,.delBtn:hover
+.clearBtn:hover
 {
 	color:#d63031;
 }
 
-.bridgeBtn:hover
+.edgeBtn:hover,.pointBtn.active
 {
 	color:#0984e3;
 }
