@@ -10,4 +10,9 @@ class WorkPlace
 
 	}
 
+	init()
+	{
+		
+	}
+
 }

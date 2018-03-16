@@ -4,7 +4,7 @@ class Point
 	{
 		this.id        = opt.id,
 		this.graph 	   = opt.graph,
-		this.config    = opt.config,
+		this.config    = opt.config.point,
 		this.container = opt.container,
 		this.target    = null,
 		this.x         = opt.x,
@@ -12,19 +12,24 @@ class Point
 		this._render();
 	}
 
+	delete()
+	{
+		this.target.remove();
+	}
+
 	_render()
 	{
-		var g = this.container.g().attr({id:this.config.point.prefix + this.id});
+		var g = this.container.g().attr({id:this.config.prefix + this.id});
 
-		g.circle(this.x,this.y,this.config.point.radius)
+		g.circle(this.x,this.y,this.config.radius)
 		.attr({fill:Random.getRandomStringColor()});
 
 		g.text(this.x,this.y,this.id)
 		.attr({
 			alignmentBaseline:"middle",
 			textAnchor:"middle",
-			fontSize:this.config.point.fontSize,
-			fill:this.config.point.color,
+			fontSize:this.config.fontSize,
+			fill:this.config.color,
 		});
 
 		this.target = g;
