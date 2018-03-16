@@ -3,10 +3,10 @@ class WorkPlace
 {
 	constructor(opt)
 	{
-		this.target = opt.target,
-		this.selected = [],
-		this.points = [],
-		this.edges = [],
+		this.target         = opt.target,
+		this.selectedPoints = [],
+		thi.selectedEdges   = [],
+		this.graph          = null,
 
 	}
 
