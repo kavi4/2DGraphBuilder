@@ -1,0 +1,42 @@
+* 
+{
+	color:#dfe6e9;
+}
+body
+{
+	background: #67B26F;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #4ca2cd, #67B26F);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #4ca2cd, #67B26F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.workPlace
+{
+	
+}
+
+.textLog
+{
+	background-color: transparent;
+	width:100%;
+	border: 2px solid #b2bec3;
+	color:white;
+}
+svg
+{
+	border: 2px solid #b2bec3;
+}
+
+.clearBtn:hover,.delBtn:hover
+{
+	color:#d63031;
+}
+
+.bridgeBtn:hover
+{
+	color:#0984e3;
+}
+
+.copyTextBtn:hover
+{
+	color:#0984e3;
+	vertical-align: center;
+}
