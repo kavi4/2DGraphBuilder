@@ -5,8 +5,9 @@ class WorkPlace
 	{
 		this.target         = opt.target;
 		this.clearBtn       = opt.clearBtn;
-		this.edgeBtn        = opt.edgeBtn;
+		this.lineEdgeBtn    = opt.lineEdgeBtn;
 		this.pointBtn       = opt.pointBtn;
+		this.fullEdgeBtn    = opt.fullEdgeBtn;
 		this.config         = opt.config;
 		this.pointMode      = false;
 		this.selectedPoints = [];
@@ -35,6 +36,14 @@ class WorkPlace
 			self.pointBtn.node.classList.toggle("active");
 			self.pointMode =! self.pointMode;
 		});
+
+		this.lineEdgeBtn.click(function(event){
+			self._buildLinearEdges(event);
+		});
+
+		this.fullEdgeBtn.click(function(event){
+			self._buildFullEdges(event);
+		});
 	}
 
 	_addPoint(event)
@@ -56,7 +65,6 @@ class WorkPlace
 		if(!this.pointMode)
 		{
 			var parent = Snap(event.target).parent();
-
 			if(!parent.attr("id")) {return false;}
 
 			var id = +parent.attr("id").split('-')[1];
@@ -86,9 +94,10 @@ class WorkPlace
 				}
 			}
 
+
 			if(new RegExp(this.config.edge.prefix).exec(parent.attr("id")))
 			{
-				var edge = this.graph.getPoint(id);
+				var edge = this.graph.getEdge(id);
 
 				if(edge && !edge.active)
 				{
@@ -114,11 +123,50 @@ class WorkPlace
 		}
 	}
 
-	_buildEdges()
+	_buildFullEdges(event)
+	{
+		var self = this;
+		var gEdges = this.target.select(this.config.workPlace.gEdges);
+
+		self.selectedPoints.forEach(function(point,i){
+			for(var j = i+1; j<self.selectedPoints.length;j++)
+			{
+				self.graph.addEdge(new Edge({id:self.edgeIndex,config:self.config,container:gEdges,firPoint:point,secPoint:self.selectedPoints[j]}));
+				self.edgeIndex++;
+			}
+		});
+
+		self._disableAll();
+	}
+
+	_buildLinearEdges(event)
+	{
+		var self = this;
+		var gEdges = this.target.select(this.config.workPlace.gEdges);
+
+		for(var j = 0;j<self.selectedPoints.length;j++)
+		{
+			if(self.selectedPoints[j+1])
+			{
+				self.graph.addEdge(new Edge({id:self.edgeIndex,config:self.config,container:gEdges,firPoint:self.selectedPoints[j],secPoint:self.selectedPoints[j+1]}));
+				self.edgeIndex++;
+			}
+		}
+		this._disableAll();
+	}
+
+	_disableAll()
 	{
 		this.selectedPoints.forEach(function(point,i){
-			
+			point.active = false;
 		});
+
+		this.selectedEdges.forEach(function(edge,i){
+			edge.active = false;
+		});
+
+		this.selectedPoints = [];
+		this.selectedEdges  = [];
 	}
 
 	clear(event)

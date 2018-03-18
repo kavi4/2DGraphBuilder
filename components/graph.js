@@ -54,6 +54,15 @@ class Graph
 		this.edges.push(edge);
 	}
 
+	getEdge(id)
+	{
+		this.edges.forEach(function(edge,i){
+			if(edge.id==id){
+				return edge;
+			}
+		});
+	}
+
 	removeEdge(id)
 	{
 		this.edges.filter(function(edge,i)

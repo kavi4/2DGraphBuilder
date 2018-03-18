@@ -11,9 +11,10 @@ var mainConfig = {
 	edge:
 	{
 		prefix:"edge-",
-		strokeWidth: 10,
+		strokeWidth: 5,
 		color:"#b2bec3",
 	},
+
 	workPlace:
 	{
 		gPoints:".points",

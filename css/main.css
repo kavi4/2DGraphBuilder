@@ -31,13 +31,7 @@ svg
 	color:#d63031;
 }
 
-.edgeBtn:hover,.pointBtn.active
+.fullEdgeBtn:hover,.pointBtn.active,.lineEdgeBtn:hover,.copyTextBtn:hover
 {
 	color:#0984e3;
-}
-
-.copyTextBtn:hover
-{
-	color:#0984e3;
-	vertical-align: center;
 }

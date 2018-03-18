@@ -1,6 +1,6 @@
     /*
     Flaticon icon font: Flaticon
-    Creation date: 16/03/2018 12:35
+    Creation date: 18/03/2018 18:14
     */
 
     @font-face {
@@ -36,24 +36,28 @@
   font-smoothing: antialiased;
     }
 
-    .flaticon-cross-out:before { content: "\f100"; }
-.flaticon-reload:before { content: "\f101"; }
-.flaticon-next:before { content: "\f102"; }
-.flaticon-back:before { content: "\f103"; }
-.flaticon-settings:before { content: "\f104"; }
-.flaticon-upload:before { content: "\f105"; }
-.flaticon-link:before { content: "\f106"; }
-.flaticon-garbage:before { content: "\f107"; }
-.flaticon-connections:before { content: "\f108"; }
-.flaticon-cancel:before { content: "\f109"; }
+    .flaticon-network:before { content: "\f100"; }
+.flaticon-plus-button:before { content: "\f101"; }
+.flaticon-cross-out:before { content: "\f102"; }
+.flaticon-reload:before { content: "\f103"; }
+.flaticon-next:before { content: "\f104"; }
+.flaticon-back:before { content: "\f105"; }
+.flaticon-settings:before { content: "\f106"; }
+.flaticon-upload:before { content: "\f107"; }
+.flaticon-link:before { content: "\f108"; }
+.flaticon-garbage:before { content: "\f109"; }
+.flaticon-connections:before { content: "\f10a"; }
+.flaticon-cancel:before { content: "\f10b"; }
     
-    $font-Flaticon-cross-out: "\f100";
-    $font-Flaticon-reload: "\f101";
-    $font-Flaticon-next: "\f102";
-    $font-Flaticon-back: "\f103";
-    $font-Flaticon-settings: "\f104";
-    $font-Flaticon-upload: "\f105";
-    $font-Flaticon-link: "\f106";
-    $font-Flaticon-garbage: "\f107";
-    $font-Flaticon-connections: "\f108";
-    $font-Flaticon-cancel: "\f109";
+    $font-Flaticon-network: "\f100";
+    $font-Flaticon-plus-button: "\f101";
+    $font-Flaticon-cross-out: "\f102";
+    $font-Flaticon-reload: "\f103";
+    $font-Flaticon-next: "\f104";
+    $font-Flaticon-back: "\f105";
+    $font-Flaticon-settings: "\f106";
+    $font-Flaticon-upload: "\f107";
+    $font-Flaticon-link: "\f108";
+    $font-Flaticon-garbage: "\f109";
+    $font-Flaticon-connections: "\f10a";
+    $font-Flaticon-cancel: "\f10b";

@@ -1,6 +1,6 @@
 	/*
   	Flaticon icon font: Flaticon
-  	Creation date: 16/03/2018 12:35
+  	Creation date: 18/03/2018 18:14
   	*/
 
 @font-face {
@@ -24,18 +24,19 @@
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
   font-family: Flaticon;
-  font-size: 40px;
-  font-style: normal;
-
+        font-size: 40px;
+font-style: normal;
 }
 
-.flaticon-cross-out:before { content: "\f100"; }
-.flaticon-reload:before { content: "\f101"; }
-.flaticon-next:before { content: "\f102"; }
-.flaticon-back:before { content: "\f103"; }
-.flaticon-settings:before { content: "\f104"; }
-.flaticon-upload:before { content: "\f105"; }
-.flaticon-link:before { content: "\f106"; }
-.flaticon-garbage:before { content: "\f107"; }
-.flaticon-connections:before { content: "\f108"; }
-.flaticon-cancel:before { content: "\f109"; }
+.flaticon-network:before { content: "\f100"; }
+.flaticon-plus-button:before { content: "\f101"; }
+.flaticon-cross-out:before { content: "\f102"; }
+.flaticon-reload:before { content: "\f103"; }
+.flaticon-next:before { content: "\f104"; }
+.flaticon-back:before { content: "\f105"; }
+.flaticon-settings:before { content: "\f106"; }
+.flaticon-upload:before { content: "\f107"; }
+.flaticon-link:before { content: "\f108"; }
+.flaticon-garbage:before { content: "\f109"; }
+.flaticon-connections:before { content: "\f10a"; }
+.flaticon-cancel:before { content: "\f10b"; }
