@@ -34,9 +34,9 @@ class Graph
 	}
 
 	removePoint(id)
-	{
+	{ 
 		var self = this;
-		this.points.filter(function(point,i)
+		this.points = this.points.filter(function(point,i)
 			{
 				if(point.id == id)
 				{
@@ -65,7 +65,7 @@ class Graph
 
 	removeEdge(id)
 	{
-		this.edges.filter(function(edge,i)
+		this.edges = this.edges.filter(function(edge,i)
 			{
 				if(edge.id == id)
 				{
@@ -79,7 +79,7 @@ class Graph
 
 	_removeEdges(point)
 	{
-		this.edges.filter(function(edge,i){
+		this.edges = this.edges.filter(function(edge,i){
 			if(edge.firPoint.id == point.id || edge.secPoint.id == point.id)
 			{
 				edge.delete();

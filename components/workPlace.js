@@ -23,27 +23,51 @@ class WorkPlace
 		this.graph = new Graph();
 
 		var self = this;
+		
+		//select 
 		this.target.click(function(event){
 				self._addPoint(event);
 				self._select(event);
 			});
 
+		//clean
 		this.clearBtn.click(function(event){
 			self.clear(event);
 		});
 
+		//point mode
 		this.pointBtn.click(function(event){
 			self.pointBtn.node.classList.toggle("active");
 			self.pointMode =! self.pointMode;
 		});
 
+		//linear graph
 		this.lineEdgeBtn.click(function(event){
 			self._buildLinearEdges(event);
 		});
 
+		//full graph
 		this.fullEdgeBtn.click(function(event){
 			self._buildFullEdges(event);
 		});
+
+		// delete
+		window.onkeydown = function(event){
+			
+			if(event.keyCode == 46 )
+			{
+				self.selectedPoints.forEach(function(point,i){
+					self.graph.removePoint(point.id);
+				});
+
+				self.selectedEdges.forEach(function(edge,i){
+					self.graph.removeEdge(edge.id);
+				});
+
+				self.selectedPoints = [];
+				self.selectedEdges  = [];
+			}
+		};
 	}
 
 	_addPoint(event)
