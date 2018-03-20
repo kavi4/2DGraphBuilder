@@ -19,6 +19,7 @@ body
 	width:100%;
 	border: 2px solid #b2bec3;
 	color:white;
+	min-height: 50vh;
 }
 svg
 {

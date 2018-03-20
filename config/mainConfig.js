@@ -6,6 +6,7 @@ var mainConfig = {
 		prefix:"point-",
 		fontSize:10,
 		color:"white",
+		selectColor:"white",
 	},
 
 	edge:
@@ -13,6 +14,7 @@ var mainConfig = {
 		prefix:"edge-",
 		strokeWidth: 5,
 		color:"#b2bec3",
+		selectColor:"white",
 	},
 
 	workPlace:

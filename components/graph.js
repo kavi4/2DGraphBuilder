@@ -2,8 +2,11 @@ class Graph
 {
 	constructor(opt)
 	{
-		this.points = [];
-		this.edges  = [];
+		opt?true:opt = {};
+
+		this.points   = [];
+		this.edges    = [];
+		this.parser   = opt.parser?opt.parser:null;
 	}
 
 	delete()

@@ -8,28 +8,41 @@ class WorkPlace
 		this.lineEdgeBtn    = opt.lineEdgeBtn;
 		this.pointBtn       = opt.pointBtn;
 		this.fullEdgeBtn    = opt.fullEdgeBtn;
+		this.outputField    = opt.outputField;
 		this.config         = opt.config;
 		this.pointMode      = false;
 		this.selectedPoints = [];
 		this.selectedEdges  = [];
 		this.graph          = null;
-		this.pointIndex = 1;
-		this.edgeIndex = 1;
+		this.pointIndex     = 1;
+		this.edgeIndex      = 1;
 		this._init();
 	}
 
 	_init()
 	{
-		this.graph = new Graph();
+		this.graph = new Graph({parser:new GraphParser()});
 
 		var self = this;
 		
-		//select 
+		
 		this.target.click(function(event){
-				self._addPoint(event);
-				self._select(event);
-			});
 
+			//add point 
+			if(event.target.id == self.target.attr("id") && self.pointMode)
+			{
+					self._addPoint(event);
+					self._output();
+			}
+
+			//select
+			if(!this.pointMode)
+			{
+				self._select(event);
+			}
+
+			});
+		
 		//clean
 		this.clearBtn.click(function(event){
 			self.clear(event);
@@ -44,11 +57,13 @@ class WorkPlace
 		//linear graph
 		this.lineEdgeBtn.click(function(event){
 			self._buildLinearEdges(event);
+			self._output();
 		});
 
 		//full graph
 		this.fullEdgeBtn.click(function(event){
 			self._buildFullEdges(event);
+			self._output();
 		});
 
 		// delete
@@ -66,28 +81,27 @@ class WorkPlace
 
 				self.selectedPoints = [];
 				self.selectedEdges  = [];
+					self._output();
 			}
 		};
 	}
 
+	_output()
+	{
+		this.outputField.node.value = this.graph.parser.output(this.graph);
+	}
+
 	_addPoint(event)
 	{
-		if(event.target.id == this.target.attr("id") && this.pointMode)
-		{
-			var x = event.layerX - this.config.point.radius*2;
-			var y = event.layerY;
-
-			var gPoints = this.target.select(this.config.workPlace.gPoints);
-
-			this.graph.addPoint(new Point({id:this.pointIndex,config:this.config,container:gPoints,x,y}));
-			this.pointIndex++;
-		}
+		var x = event.layerX - this.config.point.radius*2;
+		var y = event.layerY;
+		var gPoints = this.target.select(this.config.workPlace.gPoints);
+		this.graph.addPoint(new Point({id:this.pointIndex,config:this.config,container:gPoints,x,y}));
+		this.pointIndex++;
 	}
 
 	_select(event)
 	{
-		if(!this.pointMode)
-		{
 			var parent = Snap(event.target).parent();
 			if(!parent.attr("id")) {return false;}
 
@@ -144,7 +158,7 @@ class WorkPlace
 				}
 			}
 
-		}
+		
 	}
 
 	_buildFullEdges(event)

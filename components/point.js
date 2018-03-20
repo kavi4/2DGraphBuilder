@@ -5,7 +5,7 @@ class Point
 	{
 		if(val)
 		{
-			this.target.attr({stroke:"white"});
+			this.target.attr({stroke:this.config.selectColor});
 			this._active = true;
 		}
 		else
@@ -21,7 +21,7 @@ class Point
 		this.graph 	   = opt.graph;
 		this.config    = opt.config.point;
 		this.container = opt.container;
-		this._active    = false;
+		this._active   = false;
 		this.target    = null;
 		this.x         = opt.x;
 		this.y         = opt.y;
