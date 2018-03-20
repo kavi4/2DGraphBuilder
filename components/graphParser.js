@@ -26,42 +26,46 @@ class GraphParser
 
 	output(graph)
 	{
-		var result = "(";
+		var result = "";
 
-		if(graph.points.length)
+		if(graph.points.length || graph.edges.length)
 		{
-			result+="{";
-			graph.points.forEach(function(point,i)
+			result += "(";
+
+			if(graph.points.length)
 			{
-				result += point.x+","+point.y;
-
-				if(i!= graph.points.length-1)
+				result+="{";
+				graph.points.forEach(function(point,i)
 				{
-					result+=" ; ";
-				}else{
-					result+="}";
-				}
-			});
-		}
+					result += point.x+","+point.y;
+
+					if(i!= graph.points.length-1)
+					{
+						result+=" ; ";
+					}else{
+						result+="}";
+					}
+				});
+			}
 
 
-		if(graph.edges.length)
-		{
-			result+= ",{";
-			graph.edges.forEach(function(edge,i)
+			if(graph.edges.length)
 			{
-				result+="["+edge.firPoint.x+","+edge.firPoint.y+"],["+edge.secPoint.x+","+edge.secPoint.y+"]";
-				if(i!=graph.edges.length-1)
+				result+= ",{";
+				graph.edges.forEach(function(edge,i)
 				{
-					result+=" ; ";
-				}else{
-					result+="}";
-				}
-			});
+					result+="["+edge.firPoint.x+","+edge.firPoint.y+"],["+edge.secPoint.x+","+edge.secPoint.y+"]";
+					if(i!=graph.edges.length-1)
+					{
+						result+=" ; ";
+					}else{
+						result+="}";
+					}
+				});
+			}
+
+			result+=")";
 		}
-
-		result+=")";
-
 
 		return result;
 	}

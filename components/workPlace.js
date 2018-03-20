@@ -46,6 +46,7 @@ class WorkPlace
 		//clean
 		this.clearBtn.click(function(event){
 			self.clear(event);
+			self._output();
 		});
 
 		//point mode
@@ -87,7 +88,7 @@ class WorkPlace
 	}
 
 	_output()
-	{
+	{console.log(this.graph)
 		this.outputField.node.value = this.graph.parser.output(this.graph);
 	}
 
@@ -210,7 +211,7 @@ class WorkPlace
 	clear(event)
 	{
 		this.graph.delete();
-		this.graph          = new Graph();
+		this.graph          = new Graph({parser:new GraphParser()});
 		this.pointIndex     = 1;
 		this.edgeIndex      = 1;
 		this.selectedEdges  = [];
