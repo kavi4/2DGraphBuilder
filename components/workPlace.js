@@ -9,6 +9,7 @@ class WorkPlace
 		this.pointBtn       = opt.pointBtn;
 		this.fullEdgeBtn    = opt.fullEdgeBtn;
 		this.outputField    = opt.outputField;
+		this.copyTextBtn    = opt.copyTextBtn;
 		this.config         = opt.config;
 		this.pointMode      = false;
 		this.selectedPoints = [];
@@ -41,7 +42,23 @@ class WorkPlace
 				self._select(event);
 			}
 
-			});
+		});
+
+		//copy text log
+		this.copyTextBtn.click(function(event){
+			var field = self.outputField.node;
+			field.select(); 
+			 try {  
+			    var successful = document.execCommand('copy');  
+			    var msg = successful ? 'successful' : 'unsuccessful';  
+			    field.value = 'Graph Copied!';
+			} catch(err) {  
+			    field.value = 'Oops, unable to copy you graph';  
+			}  
+			    
+			  // Снятие выделения 
+			  window.getSelection().removeAllRanges();  
+		});
 		
 		//clean
 		this.clearBtn.click(function(event){
