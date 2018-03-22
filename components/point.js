@@ -18,7 +18,6 @@ class Point
 	constructor(opt)
 	{
 		this.id        = opt.id;
-		this.graph 	   = opt.graph;
 		this.config    = opt.config.point;
 		this.container = opt.container;
 		this._active   = false;

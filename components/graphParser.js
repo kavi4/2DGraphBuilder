@@ -16,12 +16,10 @@ class GraphParser
 		{
 			var firarr = edges[i]  .replace(/[ \[\] ]/g,'').split(',');
 			var secarr = edges[i+1].replace(/[ \[\] ]/g,'').split(',');
-			console.log(firarr);
-			console.log(secarr)
+
 
 
 		}
-		console.log(result);
 	}
 
 	output(graph)

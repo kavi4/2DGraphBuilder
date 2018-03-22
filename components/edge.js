@@ -1,11 +1,25 @@
 class Edge
 {
+	get active(){return this._active}
+	set active(val)
+	{
+		if(val)
+		{
+			this.target.select("line").attr({stroke:this.config.selectColor});
+			this._active = true;
+		}
+		else
+		{
+			this.target.select("line").attr({stroke:this.config.color});
+			this._active = false;
+		}
+	}
+
 	constructor(opt)
 	{
 		this.id        = opt.id;
-		this.graph     = opt.graph;
 		this.config    = opt.config.edge;
-		this.active    = false;
+		this._active   = false;
 		this.target    = null;
 		this.container = opt.container;
 		this.firPoint  = opt.firPoint;

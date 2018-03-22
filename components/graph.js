@@ -14,9 +14,13 @@ class Graph
 		this.points.map(function(point,i){
 			point.delete();
 		});
+
 		this.edges.map(function(edge,i){
 			edge.delete();
 		});
+		
+		this.points = [];
+		this.edges  = [];
 	}
 
 	getPoint(id)
@@ -59,11 +63,13 @@ class Graph
 
 	getEdge(id)
 	{
+		var result = false;
 		this.edges.forEach(function(edge,i){
-			if(edge.id==id){
-				return edge;
+			if(edge.id == id){
+				result = edge;
 			}
 		});
+		return result;
 	}
 
 	removeEdge(id)

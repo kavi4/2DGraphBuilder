@@ -12,11 +12,9 @@ class WorkPlace
 		this.copyTextBtn    = opt.copyTextBtn;
 		this.config         = opt.config;
 		this.pointMode      = false;
-		this.selectedPoints = [];
-		this.selectedEdges  = [];
+		this.selectBuffer   = [];
 		this.graph          = null;
-		this.pointIndex     = 1;
-		this.edgeIndex      = 1;
+		this.objIndex       = 1;
 		this._init();
 	}
 
@@ -54,15 +52,16 @@ class WorkPlace
 			    field.value = 'Graph Copied!';
 			} catch(err) {  
 			    field.value = 'Oops, unable to copy you graph';  
-			}  
+			}
+
+			setTimeout(function(){self._output();},1500);
 			    
-			  // Снятие выделения 
-			  window.getSelection().removeAllRanges();  
+			window.getSelection().removeAllRanges();  
 		});
 		
 		//clean
 		this.clearBtn.click(function(event){
-			self.clear(event);
+			self._clear(event);
 			self._output();
 		});
 
@@ -89,23 +88,28 @@ class WorkPlace
 			
 			if(event.keyCode == 46 )
 			{
-				self.selectedPoints.forEach(function(point,i){
-					self.graph.removePoint(point.id);
+				self.selectBuffer.forEach(function(item,i){
+					if(item instanceof Point)
+					{
+						self.graph.removePoint(item.id);
+					}
+
+					if(item instanceof Edge)
+					{
+						self.graph.removeEdge(item.id);
+					}
+					
 				});
 
-				self.selectedEdges.forEach(function(edge,i){
-					self.graph.removeEdge(edge.id);
-				});
-
-				self.selectedPoints = [];
-				self.selectedEdges  = [];
-					self._output();
+				self.selectBuffer  = [];
+				self._output();
+				self._disableAll();
 			}
 		};
 	}
 
 	_output()
-	{console.log(this.graph)
+	{
 		this.outputField.node.value = this.graph.parser.output(this.graph);
 	}
 
@@ -114,68 +118,38 @@ class WorkPlace
 		var x = event.layerX - this.config.point.radius*2;
 		var y = event.layerY;
 		var gPoints = this.target.select(this.config.workPlace.gPoints);
-		this.graph.addPoint(new Point({id:this.pointIndex,config:this.config,container:gPoints,x,y}));
-		this.pointIndex++;
+		this.graph.addPoint(new Point({id:this.objIndex,config:this.config,container:gPoints,x,y}));
+		this.objIndex++;
 	}
 
 	_select(event)
 	{
-			var parent = Snap(event.target).parent();
-			if(!parent.attr("id")) {return false;}
+		var parent = Snap(event.target).parent();
 
-			var id = +parent.attr("id").split('-')[1];
+		if(!parent.attr("id")) {return false;}
 
-			if(new RegExp(this.config.point.prefix).exec(parent.attr("id")))
+		var id = +parent.attr("id").split('-')[1];
+			var item = this._getGraphObjFromId(id);
+
+			if(item && !item.active)//activetion
 			{
-				var point = this.graph.getPoint(id);
-
-				if(point && !point.active)
-				{
-					this.selectedPoints.push(point);
-					point.active = true;
-					return true;
-				}
-
-				if(point && point.active)
-				{
-					point.active = false;
-					this.selectedPoints = this.selectedPoints.filter(function(point,i)
-					{
-						if(point.id != id)
-						{
-							return true;
-						}
-						return false;
-					});
-				}
+				this.selectBuffer.push(item);
+				item.active = true;
+				return true;
 			}
 
-
-			if(new RegExp(this.config.edge.prefix).exec(parent.attr("id")))
+			if(item && item.active)//deactivation
 			{
-				var edge = this.graph.getEdge(id);
-
-				if(edge && !edge.active)
+				item.active = false;
+				this.selectBuffer = this.selectBuffer.filter(function(item,i)
 				{
-					this.selectedEdges.push(edge);
-					edge.active = true;
-					return true;
-				}
-
-				if(edge && edge.active)
-				{
-					edge.active = false;
-					this.selectedEdges = this.selectedEdges.filter(function(edge,i)
+					if(item.id != id)
 					{
-						if(edge.id != id)
-						{
-							return true;
-						}
-						return false;
-					});
-				}
+						return true;
+					}
+					return false;
+				});
 			}
-
 		
 	}
 
@@ -183,14 +157,17 @@ class WorkPlace
 	{
 		var self = this;
 		var gEdges = this.target.select(this.config.workPlace.gEdges);
+		var points = this._getObjsFromBuffer(Point);
 
-		self.selectedPoints.forEach(function(point,i){
-			for(var j = i+1; j<self.selectedPoints.length;j++)
-			{
-				self.graph.addEdge(new Edge({id:self.edgeIndex,config:self.config,container:gEdges,firPoint:point,secPoint:self.selectedPoints[j]}));
-				self.edgeIndex++;
-			}
+		points.forEach(function(point,i)
+		{
+				for(var j = i+1; j<self.selectBuffer.length;j++)
+				{
+					self.graph.addEdge(new Edge({id:self.objIndex,config:self.config,container:gEdges,firPoint:point,secPoint:points[j]}));
+					self.objIndex++;
+				}
 		});
+
 
 		self._disableAll();
 	}
@@ -199,13 +176,14 @@ class WorkPlace
 	{
 		var self = this;
 		var gEdges = this.target.select(this.config.workPlace.gEdges);
+		var points = this._getObjsFromBuffer(Point);
 
-		for(var j = 0;j<self.selectedPoints.length;j++)
+		for(var j = 0;j<points.length;j++)
 		{
-			if(self.selectedPoints[j+1])
+			if(points[j+1])
 			{
-				self.graph.addEdge(new Edge({id:self.edgeIndex,config:self.config,container:gEdges,firPoint:self.selectedPoints[j],secPoint:self.selectedPoints[j+1]}));
-				self.edgeIndex++;
+				self.graph.addEdge(new Edge({id:self.objIndex,config:self.config,container:gEdges,firPoint:points[j],secPoint:points[j+1]}));
+				self.objIndex++;
 			}
 		}
 		this._disableAll();
@@ -213,26 +191,48 @@ class WorkPlace
 
 	_disableAll()
 	{
-		this.selectedPoints.forEach(function(point,i){
-			point.active = false;
+		this.selectBuffer.forEach(function(item,i){
+			item.active = false;
 		});
 
-		this.selectedEdges.forEach(function(edge,i){
-			edge.active = false;
-		});
+		this.selectBuffer = [];
 
-		this.selectedPoints = [];
-		this.selectedEdges  = [];
+		if(!this.graph.points.length)
+		{
+			this.objIndex  = 1;
+		}
 	}
 
-	clear(event)
+	_getObjsFromBuffer(objtype)
+	{
+		var result = [];
+		this.selectBuffer.forEach(function(item,i){
+			if(item instanceof objtype)
+			{
+				result.push(item);
+			}
+		});
+
+		return result;
+	}
+
+	_getGraphObjFromId(id)
+	{
+		var result = false;
+		var point  = this.graph.getPoint(id);
+		var edge   = this.graph.getEdge(id);
+
+		if(point){result = point;}
+		if(edge){result  = edge;}
+		return result;
+	}
+
+	_clear(event)
 	{
 		this.graph.delete();
 		this.graph          = new Graph({parser:new GraphParser()});
-		this.pointIndex     = 1;
-		this.edgeIndex      = 1;
-		this.selectedEdges  = [];
-		this.selectedPoints = [];
+		this.objIndex       = 1;
+		this.selectBuffer   = [];
 	}
 
 }
