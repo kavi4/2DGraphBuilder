@@ -21,6 +21,12 @@ var mainConfig = {
 	{
 		gPoints:".points",
 		gEdges:".edges",
+	},
+
+	selectContainer:
+	{
+		strokeColor:'#74b9ff',
+		fill:'rgba(116, 185, 255,0.5)',
 	}
 
 	

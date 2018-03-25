@@ -3,43 +3,87 @@ class WorkPlace
 {
 	constructor(opt)
 	{
-		this.target         = opt.target;
-		this.clearBtn       = opt.clearBtn;
-		this.lineEdgeBtn    = opt.lineEdgeBtn;
-		this.pointBtn       = opt.pointBtn;
-		this.fullEdgeBtn    = opt.fullEdgeBtn;
-		this.outputField    = opt.outputField;
-		this.copyTextBtn    = opt.copyTextBtn;
-		this.config         = opt.config;
-		this.pointMode      = false;
-		this.selectBuffer   = [];
-		this.graph          = null;
-		this.objIndex       = 1;
+		this.target          = opt.target;
+		this.clearBtn        = opt.clearBtn;
+		this.lineEdgeBtn     = opt.lineEdgeBtn;
+		this.pointBtn        = opt.pointBtn;
+		this.fullEdgeBtn     = opt.fullEdgeBtn;
+		this.outputField     = opt.outputField;
+		this.copyTextBtn     = opt.copyTextBtn;
+		this.config          = opt.config;
+		this.pointMode       = false;
+		this.selectBuffer    = [];
+		this.selectContainer = null;
+		this.graph           = null;
+		this.parser          = null;
+		this.objIndex        = 1;
 		this._init();
 	}
 
 	_init()
 	{
-		this.graph = new Graph({parser:new GraphParser()});
+		this.graph = new Graph();
+		this.parser = new GraphParser();
+		this.selectContainer = new SelectBox({config:this.config,container:this.target.select(".selectBox")});
 
 		var self = this;
-		
-		
-		this.target.click(function(event){
+		//select mode
+		var move = false;
+		function mMove(event)
+		{
+			move = true;
+			var x = event.layerX - self.config.point.radius*2;
+			var y = event.layerY;
+			self.selectContainer.setSecPos(x,y);
+		}
 
-			//add point 
+		this.target.mousedown(function(event)
+		{
+			move = false;
+			if(self.pointMode){return false;}
+
+			var x = event.layerX - self.config.point.radius*2;
+			var y = event.layerY;
+			self.selectContainer.setFirPos(x,y);
+			self.selectContainer.setSecPos(x,y);
+			self.selectContainer.show();
+			self.target.mousemove(mMove);
+		});
+
+		self.target.mouseup(function(event)
+		{
+			if(self.pointMode){return false;}
+
+			if(!move)
+			{
+				self._select(event);
+			}
+
+			if(move)
+			{
+				self.selectBuffer.forEach(function(item,i){
+					item.active = false;
+				});
+				self.selectBuffer = [];
+				var buffer = self.selectContainer.selectFromGraph(self.graph);
+				buffer.forEach(function(item){
+					item.active = true;
+				});
+
+				self.selectBuffer = buffer;
+			}
+			move = false;
+			self.selectContainer.hide();
+			self.target.unmousemove(mMove);
+		});
+
+		//add point 
+		this.target.click(function(event){
 			if(event.target.id == self.target.attr("id") && self.pointMode)
 			{
 					self._addPoint(event);
 					self._output();
 			}
-
-			//select
-			if(!this.pointMode)
-			{
-				self._select(event);
-			}
-
 		});
 
 		//copy text log
@@ -110,7 +154,7 @@ class WorkPlace
 
 	_output()
 	{
-		this.outputField.node.value = this.graph.parser.output(this.graph);
+		this.outputField.node.value = this.parser.output(this.graph);
 	}
 
 	_addPoint(event)
@@ -129,6 +173,7 @@ class WorkPlace
 		if(!parent.attr("id")) {return false;}
 
 		var id = +parent.attr("id").split('-')[1];
+
 			var item = this._getGraphObjFromId(id);
 
 			if(item && !item.active)//activetion
@@ -158,13 +203,17 @@ class WorkPlace
 		var self = this;
 		var gEdges = this.target.select(this.config.workPlace.gEdges);
 		var points = this._getObjsFromBuffer(Point);
+		console.log(points)
 
 		points.forEach(function(point,i)
 		{
 				for(var j = i+1; j<self.selectBuffer.length;j++)
 				{
-					self.graph.addEdge(new Edge({id:self.objIndex,config:self.config,container:gEdges,firPoint:point,secPoint:points[j]}));
-					self.objIndex++;
+					if(points[j])
+					{
+						self.graph.addEdge(new Edge({id:self.objIndex,config:self.config,container:gEdges,firPoint:point,secPoint:points[j]}));
+						self.objIndex++;
+					}
 				}
 		});
 
@@ -230,7 +279,7 @@ class WorkPlace
 	_clear(event)
 	{
 		this.graph.delete();
-		this.graph          = new Graph({parser:new GraphParser()});
+		this.graph          = new Graph();
 		this.objIndex       = 1;
 		this.selectBuffer   = [];
 	}

@@ -6,7 +6,6 @@ class Graph
 
 		this.points   = [];
 		this.edges    = [];
-		this.parser   = opt.parser?opt.parser:null;
 	}
 
 	delete()

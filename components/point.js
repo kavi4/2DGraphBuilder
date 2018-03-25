@@ -5,12 +5,12 @@ class Point
 	{
 		if(val)
 		{
-			this.target.attr({stroke:this.config.selectColor});
+			this.target.select("circle").attr({stroke:this.config.selectColor});
 			this._active = true;
 		}
 		else
 		{
-			this.target.attr({stroke:"null"});
+			this.target.select("circle").attr({stroke:"null"});
 			this._active = false;
 		}
 	}
