@@ -203,7 +203,6 @@ class WorkPlace
 		var self = this;
 		var gEdges = this.target.select(this.config.workPlace.gEdges);
 		var points = this._getObjsFromBuffer(Point);
-		console.log(points)
 
 		points.forEach(function(point,i)
 		{
@@ -211,8 +210,15 @@ class WorkPlace
 				{
 					if(points[j])
 					{
-						self.graph.addEdge(new Edge({id:self.objIndex,config:self.config,container:gEdges,firPoint:point,secPoint:points[j]}));
-						self.objIndex++;
+						var edge = new Edge({id:self.objIndex,config:self.config,container:gEdges,firPoint:point,secPoint:points[j]});
+
+						if(!self.graph.findEdge(edge))
+						{
+							self.graph.addEdge(edge);
+							self.objIndex++;
+						}else{
+							edge.delete();
+						}
 					}
 				}
 		});
@@ -231,8 +237,14 @@ class WorkPlace
 		{
 			if(points[j+1])
 			{
-				self.graph.addEdge(new Edge({id:self.objIndex,config:self.config,container:gEdges,firPoint:points[j],secPoint:points[j+1]}));
-				self.objIndex++;
+				var edge = new Edge({id:self.objIndex,config:self.config,container:gEdges,firPoint:points[j],secPoint:points[j+1]});
+				if(!self.graph.findEdge(edge))
+				{
+					self.graph.addEdge(edge);
+					self.objIndex++;
+				}else{
+					edge.delete();
+				}
 			}
 		}
 		this._disableAll();

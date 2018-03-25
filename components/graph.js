@@ -71,6 +71,19 @@ class Graph
 		return result;
 	}
 
+	findEdge(find)
+	{
+		var result = false;
+		this.edges.forEach(function(edge,i){
+			if((edge.firPoint.id == find.firPoint.id || edge.firPoint.id == find.secPoint.id) && (edge.secPoint.id == find.secPoint.id || edge.secPoint.id == find.firPoint.id))
+			{
+				result = edge;
+				return result;
+			}
+		});
+		return result;
+	}
+
 	removeEdge(id)
 	{
 		this.edges = this.edges.filter(function(edge,i)
