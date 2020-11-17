@@ -4,4 +4,4 @@ Simple graph builder
 
 ![npm (scoped)](./graph-builder-preview.png)
 
-[Demo here](https://kavi4.github.io/demos/2d-graph-builder/index.html)
+[Demo here](https://kavi4.github.io/demos/graphBuilder/index.html)
